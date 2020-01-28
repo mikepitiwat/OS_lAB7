@@ -21,7 +21,7 @@ void calNeed(){
         }
     }
 }
-void func(int i){
+void availSum(int i){
     for (int j = 0; j < nr; ++j) {
         Available[i][j] = Allocation[i][j] + AvailSUM[j];
         AvailSUM[j] = Available[i][j];
@@ -36,7 +36,7 @@ void Banker(){
                     Available[i][j] =-1;
                     if (AvailSUM[j] >= Need[i][j]) {
                         if (j == nr - 1) { // round 3 finish
-                            func(i);
+                            availSum(i);
                             state[i] = Level+=1;
                         }
                     } else {
@@ -48,20 +48,6 @@ void Banker(){
             }
         }
     }
-}
-char* ansState(){
-    int countNULL = 0;
-    for (int i = 0; i < np; ++i) {
-        if(state[i] == -1){
-            countNULL +=1;
-        }
-    }
-    if(countNULL == np)
-        return "**ALL process don't run to completion=DEADLOCK";
-    else if(countNULL > 0 && countNULL < np)
-        return "Next state ... Not enough for process needs remaining\nProcess may get deadlock = UNSAFE STATE";
-    else
-        return "**ALL process run to completion = SAFE STATE";
 }
 
 void input(){
@@ -129,6 +115,21 @@ void showTable(){
     }
     printf("===========================================================\n");
 }
+char* ansState(){
+    int countNULL = 0;
+    for (int i = 0; i < np; ++i) {
+        if(state[i] == -1){
+            countNULL +=1;
+        }
+    }
+    if(countNULL == np)
+        return "If grant last drive to any process may get deadlock = UNSAFE STATE\n**ALL process don't run to completion";
+    else if(countNULL > 0 && countNULL < np)
+        return "Process may get deadlock = UNSAFE STATE";
+    else
+        return "**ALL process run to completion = SAFE STATE";
+}
+
 int main(){
     input();
     calAvailable();
@@ -142,10 +143,14 @@ int main(){
     printf("Available drives = ");
     for (int i = 0; i < nr; ++i)
         printf("%d ", AvailDrives[i]);
-    printf("\n");
+    printf("\nFirst state is ");
+    int First = -1;
+    for (int i = 0; i < np; ++i)
+        if(state[i] == 1) {
+            First = i + 1;
+            break;
+        }
+    if(First !=-1)
+        printf("P%d\n", First);
     printf("%s", ansState());
-
-
-
-
 }
