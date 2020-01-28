@@ -5,16 +5,6 @@ int np,nr; // number process and number resource
 int Allocation[10][5],Max[10][5],Need[10][5],Available[10][5];;
 int resource[5],state[10],AvailDrives[5],AvailSUM[5];
 
-//int np = 4, nr = 3;
-//int resource[5]         = {12,16,13};
-//int Allocation[10][5]   = {{8,5,3},{1,3,5},{1,3,0},{0,1,3}};
-//int Max[10][5]          = {{10,9,5},{12,7,7},{3,6,9},{8,13,5}};
-//int Need[10][5];
-//int AvailDrives[5];
-//int Available[10][5];
-//int AvailSUM[5];
-//int state[10];
-
 void calAvailable(){
     for (int i = 0; i < nr; ++i) {
         for (int j = 0; j < np; ++j) {
