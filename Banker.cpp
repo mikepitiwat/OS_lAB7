@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 
 int np,nr; // number process and number resource
 int Allocation[10][5],Max[10][5],Need[10][5],Available[10][5];;
